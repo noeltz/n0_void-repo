@@ -18,6 +18,10 @@ env:
   BOOTSTRAP: "x86_64"
   TEST: "0"
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   actions: write
@@ -59,7 +63,7 @@ jobs:
       - name: Update packages
         working-directory: ./repo
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             repoman update --srcpkgs ./srcpkgs
 
@@ -87,7 +91,7 @@ jobs:
         if: ${{ inputs.rebuild != true }}
         continue-on-error: true
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           repoman restore \
             --remote noeltz/n0_void-repo \
@@ -97,7 +101,7 @@ jobs:
       - name: Plan builds
         id: plan
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           args=(
             plan
@@ -157,7 +161,7 @@ jobs:
       - name: Publish repository
         if: ${{ steps.plan.outputs.packages != '' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           repoman publish \
             --source ./void-packages/hostdir/binpkgs \

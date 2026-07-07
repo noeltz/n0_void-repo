@@ -16,7 +16,7 @@ distfiles="https://github.com/imputnet/helium-linux/releases/download/${version}
 checksum="98404a938f96f4c8b2bbb92bed0422fd60c7e1591ec6bd69c4dc5e8b67212793"
 
 _n0_source=github-release
-_n0_repo=impunet/helium-linux
+_n0_repo=imputnet/helium-linux
 _n0_strip=v
 
 do_install() {

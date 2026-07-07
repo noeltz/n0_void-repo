@@ -29,20 +29,7 @@ $ sudo xbps-install vx
 
 after that, packages update with your system (`xbps-install -Su`).
 
----
 
-## available packages
-
-| package | description | source |
-|---|---|---|
-| dgop | system/process monitor | github-release |
-| openai-codex | openai codex cli | github-release |
-| polo | local script manager | github-release |
-| protonplus | wine/proton compatibility manager | github-release |
-| vx | xbps convenience wrapper | github-release |
-| zed | high-performance code editor | github-release |
-
----
 
 ## how to create a template
 
@@ -149,7 +136,6 @@ these must be set in the github repo:
 
 | secret | description |
 |---|---|
-| `TOKEN` | github pat with `repo` scope |
 | `XBPS_PRIVATE_KEY` | rsa private key (pem) for signing packages |
 
 generate a keypair:

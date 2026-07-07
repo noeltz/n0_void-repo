@@ -16,7 +16,7 @@ go_package="${go_import_path}/cmd/dms"
 depends="quickshell-git dgop matugen qt6-declarative qt6-wayland pam accountsservice"
 
 short_desc="A Material You inspired shell for Wayland"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/AvengeMedia/DankMaterialShell"
 

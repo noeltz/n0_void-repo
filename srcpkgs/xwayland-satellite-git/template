@@ -7,7 +7,7 @@ hostmakedepends="pkg-config clang"
 makedepends="xcb-util-cursor-devel"
 depends="xorg-server-xwayland"
 short_desc="Xwayland outside your Wayland compositor (Git Snapshot)"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="MPL-2.0"
 homepage="https://github.com/Supreeeme/xwayland-satellite"
 

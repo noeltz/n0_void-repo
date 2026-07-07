@@ -26,7 +26,7 @@ depends="
     libsoup3
 "
 short_desc="Compatibility tools manager for GNOME (Wine/Proton)"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/Vysp3r/ProtonPlus"
 

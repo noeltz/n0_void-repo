@@ -12,7 +12,7 @@ makedepends="eudev-libudev-devel libxkbcommon-devel libinput-devel libgbm-devel
 depends="wayland xwayland-satellite-git"
 checkdepends="wayland"
 short_desc="Scrollable-tiling Wayland compositor (Git Snapshot)"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/niri-wm/niri"
 conflicts="niri>=0"

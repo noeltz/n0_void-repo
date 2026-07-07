@@ -11,7 +11,7 @@ build_style=meson
 buildtype=release
 configure_args="-Db_ndebug=true"
 short_desc="A minimal login greeter for greetd that matches the look and feel of Noctalia Shell."
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="MIT"
 homepage="https://github.com/noctalia-dev/noctalia-greeter"
 

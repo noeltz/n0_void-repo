@@ -6,7 +6,7 @@ build_style=go
 go_import_path="github.com/AvengeMedia/dgop"
 go_package="${go_import_path}/cmd/dgop"
 short_desc="Stateless, cursor-based system and process monitoring tool"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="MIT"
 homepage="https://github.com/AvengeMedia/dgop"
 

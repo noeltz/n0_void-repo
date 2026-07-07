@@ -6,7 +6,7 @@ build_style=fetch
 hostmakedepends="bsdtar"
 depends="gtk+3 libnotify nss libXScrnSaver libXtst xdg-utils at-spi2-core util-linux-libs libsecret"
 short_desc="Custom Discord desktop client with Vencord preinstalled"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/Vencord/Vesktop"
 

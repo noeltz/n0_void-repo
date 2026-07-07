@@ -20,7 +20,7 @@ makedepends="cli11 qt6-base-private-devel qt6-declarative-private-devel
 depends="qt6-svg"
 
 short_desc="Flexible QtQuick-based desktop shell toolkit (Git Snapshot)"
-maintainer="Clara Keller <https://github.com/clarajk>"
+maintainer="noeltz <https://github.com/noeltz>"
 license="LGPL-3.0-only"
 homepage="https://quickshell.org"
 

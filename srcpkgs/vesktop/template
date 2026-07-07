@@ -10,9 +10,9 @@ maintainer="Clara Keller <https://github.com/clarajk>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/Vencord/Vesktop"
 
-_abyss_source=github-release
-_abyss_repo=Vencord/Vesktop
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=Vencord/Vesktop
+_n0_strip=v
 
 distfiles="https://github.com/Vencord/Vesktop/releases/download/v${version}/vesktop_${version}_amd64.deb"
 checksum=2d4c97abe4810703561d59c63cb12b1926f591fe1fe2bf9e914db66c6cc31cf5

@@ -4,8 +4,8 @@ revision=1
 _commit=831c513f1ea0396ed4671b8d4704c0ed6bab83f4
 wrksrc="noctalia-shell-${_commit}"
 
-_abyss_source=git-head
-_abyss_repo="https://github.com/noctalia-dev/noctalia-shell.git"
+_n0_source=git-head
+_n0_repo="https://github.com/noctalia-dev/noctalia-shell.git"
 
 build_style=meson
 buildtype=release

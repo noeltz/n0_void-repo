@@ -11,8 +11,8 @@ maintainer="Clara Keller <https://github.com/clarajk>"
 license="MPL-2.0"
 homepage="https://github.com/Supreeeme/xwayland-satellite"
 
-_abyss_source=git-head
-_abyss_repo="https://github.com/Supreeeme/xwayland-satellite.git"
+_n0_source=git-head
+_n0_repo="https://github.com/Supreeeme/xwayland-satellite.git"
 
 conflicts="xwayland-satellite>=0"
 provides="xwayland-satellite-${version}_${revision}"

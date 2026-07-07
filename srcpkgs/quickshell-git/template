@@ -4,8 +4,8 @@ version=20260707095156
 revision=1
 build_style=cmake
 
-_abyss_source=git-head
-_abyss_repo="https://git.outfoxxed.me/quickshell/quickshell.git"
+_n0_source=git-head
+_n0_repo="https://git.outfoxxed.me/quickshell/quickshell.git"
 
 configure_args="-DDISTRIBUTOR=Void -DDISTRIBUTOR_DEBUGINFO_AVAILABLE=YES
  -DINSTALL_QML_PREFIX=lib/qt6/qml -DCRASH_HANDLER=OFF -DNO_PCH=ON"

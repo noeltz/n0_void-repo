@@ -30,9 +30,9 @@ maintainer="Clara Keller <https://github.com/clarajk>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/Vysp3r/ProtonPlus"
 
-_abyss_source=github-release
-_abyss_repo=Vysp3r/ProtonPlus
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=Vysp3r/ProtonPlus
+_n0_strip=v
 
 distfiles="https://github.com/Vysp3r/ProtonPlus/archive/refs/tags/v${version}.tar.gz"
 checksum=0ade36d494034c7112b9ff5379eade94798dcdcb56847bb8c988a595bc408b26

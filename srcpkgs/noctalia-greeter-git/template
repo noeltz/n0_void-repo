@@ -4,8 +4,8 @@ revision=1
 _commit=48fc6d22b54efd62df83e3d1266feb89c291115a
 wrksrc="noctalia-greeter-${_commit}"
 
-_abyss_source=git-head
-_abyss_repo="https://github.com/noctalia-dev/noctalia-greeter.git"
+_n0_source=git-head
+_n0_repo="https://github.com/noctalia-dev/noctalia-greeter.git"
 
 build_style=meson
 buildtype=release

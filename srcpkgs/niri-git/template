@@ -18,8 +18,8 @@ homepage="https://github.com/niri-wm/niri"
 conflicts="niri>=0"
 provides="niri-${version}_${revision}"
 
-_abyss_source=git-head
-_abyss_repo="https://github.com/niri-wm/niri.git"
+_n0_source=git-head
+_n0_repo="https://github.com/niri-wm/niri.git"
 
 distfiles="https://github.com/niri-wm/niri/archive/${_commit}.tar.gz"
 checksum=8bf357c2b891625f373cb962d94ab638397141b9e8e5d9c82048bf8dec6b466c

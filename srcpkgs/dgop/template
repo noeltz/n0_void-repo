@@ -10,9 +10,9 @@ maintainer="Clara Keller <https://github.com/clarajk>"
 license="MIT"
 homepage="https://github.com/AvengeMedia/dgop"
 
-_abyss_source=github-release
-_abyss_repo=AvengeMedia/dgop
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=AvengeMedia/dgop
+_n0_strip=v
 
 distfiles="https://github.com/AvengeMedia/dgop/archive/refs/tags/v${version}.tar.gz"
 checksum=afd2f9542ce25c739b13d6213fdfbc5493bce537d5afec309b4df945e318ff1a

@@ -9,9 +9,9 @@ homepage="https://openai.com/codex/"
 distfiles="https://github.com/openai/codex/releases/download/rust-v${version}/codex-x86_64-unknown-linux-musl.tar.gz"
 checksum=cb933ec3cb61bf4b5fc88eecf5e6149829faa6172535b6ef0afb0154beb4aab8
 
-_abyss_source=github-release
-_abyss_repo=openai/codex
-_abyss_strip=rust-v
+_n0_source=github-release
+_n0_repo=openai/codex
+_n0_strip=rust-v
 
 do_install() {
 	vbin codex-x86_64-unknown-linux-musl codex

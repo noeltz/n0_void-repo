@@ -4,9 +4,9 @@ version=1.4.6
 revision=1
 wrksrc="DankMaterialShell-${version}"
 
-_abyss_source=github-release
-_abyss_repo=AvengeMedia/DankMaterialShell
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=AvengeMedia/DankMaterialShell
+_n0_strip=v
 
 build_style=go
 build_wrksrc="core"

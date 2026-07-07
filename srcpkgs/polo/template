@@ -9,9 +9,9 @@ homepage="https://github.com/clarajk/polo"
 distfiles="https://github.com/clarajk/polo/releases/download/v${version}/polo-x86_64-unknown-linux-musl.tar.gz"
 checksum=90fde9d08fae89c4e0c5f01a8b293a7d5fb028e9da17d4187d21d3d064672edc
 
-_abyss_source=github-release
-_abyss_repo=clarajk/polo
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=clarajk/polo
+_n0_strip=v
 
 do_install() {
 	vbin polo polo

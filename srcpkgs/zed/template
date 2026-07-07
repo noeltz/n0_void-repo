@@ -12,9 +12,9 @@ changelog="https://github.com/zed-industries/zed/releases"
 distfiles="https://github.com/zed-industries/zed/releases/download/v${version}/zed-linux-x86_64.tar.gz"
 checksum=39e553ce3a00feeb78eab63a5cb7237cb460f3c9596b1b19052ceb7b9e8ec4dd
 
-_abyss_source=github-release
-_abyss_repo=zed-industries/zed
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=zed-industries/zed
+_n0_strip=v
 
 do_install() {
     vmkdir opt/zed

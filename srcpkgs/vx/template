@@ -9,9 +9,9 @@ homepage="https://github.com/clarajk/vx"
 distfiles="https://github.com/clarajk/vx/releases/download/v${version}/vx-x86_64-unknown-linux-musl.tar.gz"
 checksum=7d6c0f58fa09297815c96f2fab9f1330dd0016326342629aaa35309ca119a63b
 
-_abyss_source=github-release
-_abyss_repo=clarajk/vx
-_abyss_strip=v
+_n0_source=github-release
+_n0_repo=clarajk/vx
+_n0_strip=v
 
 do_install() {
 	vbin vx vx

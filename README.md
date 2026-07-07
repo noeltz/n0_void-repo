@@ -196,3 +196,13 @@ only `x86_64` glibc is currently supported.
 ---
 
 *powered by [repoman](https://github.com/noeltz/n0_void-repoman) & [void linux](https://voidlinux.org)*
+
+---
+
+## credits
+
+n0_void-repo is a fork of [abyss](https://github.com/clarajk/abyss) by
+[clara keller](https://github.com/clarajk) — the original cryptographically
+signed, self-updating xbps package repository for void linux. the repository
+structure, workflow design, and automation approach are all directly inherited
+from abyss.

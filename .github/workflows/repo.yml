@@ -44,7 +44,7 @@ jobs:
       - name: Install repoman
         run: |
           curl -L -o repoman.tar.gz \
-            https://github.com/noeltz/n0_void-repoman/releases/latest/download/repoman-x86_64-unknown-linux-musl.tar.gz
+            https://github.com/noeltz/n0_void-repoman/releases/latest/download/repoman-linux-amd64.tar.gz
 
           tar -xzf repoman.tar.gz
           chmod +x repoman

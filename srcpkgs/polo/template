@@ -1,0 +1,18 @@
+pkgname=polo
+version=0.3.0
+revision=1
+archs="x86_64"
+short_desc="A small utility for managing scripts for the local user."
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="MIT"
+homepage="https://github.com/clarajk/polo"
+distfiles="https://github.com/clarajk/polo/releases/download/v${version}/polo-x86_64-unknown-linux-musl.tar.gz"
+checksum=90fde9d08fae89c4e0c5f01a8b293a7d5fb028e9da17d4187d21d3d064672edc
+
+_abyss_source=github-release
+_abyss_repo=clarajk/polo
+_abyss_strip=v
+
+do_install() {
+	vbin polo polo
+}

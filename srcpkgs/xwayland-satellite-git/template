@@ -1,0 +1,27 @@
+pkgname=xwayland-satellite-git
+_commit=8575d0ef55d70f9b4c46b6bffb3accf912217e1e
+version=20260612011750
+revision=1
+build_style=cargo
+hostmakedepends="pkg-config clang"
+makedepends="xcb-util-cursor-devel"
+depends="xorg-server-xwayland"
+short_desc="Xwayland outside your Wayland compositor (Git Snapshot)"
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="MPL-2.0"
+homepage="https://github.com/Supreeeme/xwayland-satellite"
+
+_abyss_source=git-head
+_abyss_repo="https://github.com/Supreeeme/xwayland-satellite.git"
+
+conflicts="xwayland-satellite>=0"
+provides="xwayland-satellite-${version}_${revision}"
+
+distfiles="https://github.com/Supreeeme/xwayland-satellite/archive/${_commit}.tar.gz"
+checksum=470a7ba43944e7e8187022fa9b25e34734cc0bf4c991ecdf0974c9658b45a1de
+
+make_check="no"
+
+post_install() {
+    vman xwayland-satellite.man xwayland-satellite.1
+}

@@ -1,0 +1,49 @@
+pkgname=noctalia-greeter-git
+version=20260705182943
+revision=1
+_commit=48fc6d22b54efd62df83e3d1266feb89c291115a
+wrksrc="noctalia-greeter-${_commit}"
+
+_abyss_source=git-head
+_abyss_repo="https://github.com/noctalia-dev/noctalia-greeter.git"
+
+build_style=meson
+buildtype=release
+configure_args="-Db_ndebug=true"
+short_desc="A minimal login greeter for greetd that matches the look and feel of Noctalia Shell."
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="MIT"
+homepage="https://github.com/noctalia-dev/noctalia-greeter"
+
+distfiles="https://github.com/noctalia-dev/noctalia-greeter/archive/${_commit}.tar.gz"
+checksum=385bb74231c1411fd61bab9324b3c9e83257ba1b7332a5aae4770ee857993158
+
+hostmakedepends="meson ninja pkg-config git"
+
+makedepends="
+ wayland-devel
+ wayland-protocols
+ wlroots-devel
+ libepoxy-devel
+ MesaLib-devel
+ libglvnd-devel
+ cairo-devel
+ pango-devel
+ fontconfig-devel
+ freetype-devel
+ harfbuzz-devel
+ libxkbcommon-devel
+ libwebp-devel
+ librsvg-devel
+"
+
+depends="greetd dbus"
+
+post_install() {
+    vlicense LICENSE
+    vdoc README.md
+
+    if [ ! -x "${DESTDIR}/usr/bin/noctalia-greeter" ]; then
+        msg_error "Expected binary /usr/bin/noctalia-greeter not found.\n"
+    fi
+}

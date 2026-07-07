@@ -1,0 +1,31 @@
+pkgname=quickshell-git
+_commit=533b7a66117971e7b784221ec63b3a8f9a5aecfc
+version=20260707072144
+revision=1
+build_style=cmake
+
+_abyss_source=git-head
+_abyss_repo="https://git.outfoxxed.me/quickshell/quickshell.git"
+
+configure_args="-DDISTRIBUTOR=Void -DDISTRIBUTOR_DEBUGINFO_AVAILABLE=YES
+ -DINSTALL_QML_PREFIX=lib/qt6/qml -DCRASH_HANDLER=OFF -DNO_PCH=ON"
+
+hostmakedepends="pkg-config wayland-devel qt6-base qt6-declarative-devel
+ qt6-shadertools"
+
+makedepends="cli11 qt6-base-private-devel qt6-declarative-private-devel
+ qt6-shadertools-devel pipewire-devel jemalloc-devel pam-devel
+ Vulkan-Headers polkit-devel libgbm-devel wayland-protocols qt6-wayland-devel"
+
+depends="qt6-svg"
+
+short_desc="Flexible QtQuick-based desktop shell toolkit (Git Snapshot)"
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="LGPL-3.0-only"
+homepage="https://quickshell.org"
+
+conflicts="quickshell>=0"
+provides="quickshell-${version}_${revision}"
+
+distfiles="https://git.outfoxxed.me/quickshell/quickshell/archive/${_commit}.tar.gz"
+checksum=361f8935ce7d7cd94240ecfcef76e1084f13f7d3fa7775836c9257310fcf7baf

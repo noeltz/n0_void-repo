@@ -1,0 +1,164 @@
+name: Manage XBPS repository
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      rebuild:
+        description: "Force rebuild all packages"
+        type: boolean
+        required: false
+        default: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  NODE_OPTIONS: "--no-warnings"
+  ARCH: "x86_64"
+  BOOTSTRAP: "x86_64"
+  TEST: "0"
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  repo:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/void-linux/void-glibc-full:latest
+      options: --privileged
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Update XBPS and install dependencies
+        shell: sh
+        run: |
+          set -e
+          REPO="https://repo-default.voidlinux.org/current"
+          xbps-install -Syu xbps
+          xbps-install -yu
+          xbps-install -y bash curl git grep openssl tar xz ca-certificates shadow sudo base-devel file github-cli zstd jq
+
+      - name: Install repoman
+        run: |
+          curl -L -o repoman.tar.gz \
+            https://github.com/noeltz/n0_void-repoman/releases/latest/download/repoman-x86_64-unknown-linux-musl.tar.gz
+
+          tar -xzf repoman.tar.gz
+          chmod +x repoman
+          install -Dm755 repoman /usr/local/bin/repoman
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          path: repo
+
+      - name: Update packages
+        working-directory: ./repo
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+            repoman update --srcpkgs ./srcpkgs
+
+      - name: Clone void-packages
+        uses: actions/checkout@v4
+        with:
+          repository: void-linux/void-packages
+          fetch-depth: 1
+          path: void-packages
+
+      - name: Prepare xbps-src
+        working-directory: ./void-packages
+        run: |
+          ln -s / masterdir
+          echo "x86_64" > /.xbps_chroot_init
+          echo "XBPS_CHROOT_CMD=ethereal" >> etc/conf
+          echo "XBPS_ALLOW_CHROOT_BREAKOUT=yes" >> etc/conf
+          echo "XBPS_MAKEJOBS=$(nproc)" >> etc/conf
+
+      - name: Copy srcpkgs to void-packages
+        run: |
+          cp -r ./repo/srcpkgs/. ./void-packages/srcpkgs/
+
+      - name: Restore packages
+        if: ${{ inputs.rebuild != true }}
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          repoman restore \
+            --remote noeltz/n0_void-repo \
+            --srcpkgs ./repo/srcpkgs \
+            --dest ./void-packages/hostdir/binpkgs
+
+      - name: Plan builds
+        id: plan
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          args=(
+            plan
+            --srcpkgs ./repo/srcpkgs
+            --binpkgs ./void-packages/hostdir/binpkgs
+            --output "$GITHUB_OUTPUT"
+          )
+
+          if [[ "${{ inputs.rebuild }}" == "true" ]]; then
+            args+=(--force-rebuild)
+          fi
+
+          repoman "${args[@]}"
+
+      - name: Push changes
+        if: ${{ steps.plan.outputs.packages != '' }}
+        working-directory: ./repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -u
+          if ! git diff --cached --quiet; then
+            git commit -m "auto-update: template refresh $(date -u '+%Y-%m-%d %H:%M:%S')"
+            git pull --rebase origin ${{ github.ref_name }}
+            git push origin HEAD:${{ github.ref_name }}
+          else
+            echo "No changes staged. Skipping commit."
+          fi
+
+      - name: Build packages
+        if: ${{ steps.plan.outputs.packages != '' }}
+        working-directory: ./void-packages
+        run: |
+          for pkg in ${{ steps.plan.outputs.packages }}; do
+            ./xbps-src pkg "$pkg"
+          done
+
+      - name: Sign packages
+        if: ${{ steps.plan.outputs.packages != '' }}
+        working-directory: ./void-packages/hostdir/binpkgs
+        run: |
+          rm -f *.sig2
+          printf '%s\n' '${{ secrets.XBPS_PRIVATE_KEY }}' > /tmp/private.pem
+          chmod 600 /tmp/private.pem
+
+          for pkg in *.xbps; do
+            xbps-rindex --privkey /tmp/private.pem --sign-pkg "$pkg" --signedby '[n0] repoman build bot'
+          done
+
+      - name: Index repository
+        if: ${{ steps.plan.outputs.packages != '' }}
+        working-directory: ./void-packages/hostdir/binpkgs
+        run: |
+          xbps-rindex -f -a *.xbps
+          xbps-rindex --privkey /tmp/private.pem --signedby '[n0] repoman build bot' --sign .
+
+      - name: Publish repository
+        if: ${{ steps.plan.outputs.packages != '' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          repoman publish \
+            --source ./void-packages/hostdir/binpkgs \
+            --remote noeltz/n0_void-repo

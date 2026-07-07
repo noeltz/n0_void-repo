@@ -1,0 +1,56 @@
+pkgname=noctalia-shell-git
+version=20260707072146
+revision=1
+_commit=831c513f1ea0396ed4671b8d4704c0ed6bab83f4
+wrksrc="noctalia-shell-${_commit}"
+
+_abyss_source=git-head
+_abyss_repo="https://github.com/noctalia-dev/noctalia-shell.git"
+
+build_style=meson
+buildtype=release
+configure_args="-Db_ndebug=true"
+short_desc="Lightweight Wayland shell built directly on Wayland and OpenGL ES"
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="MIT"
+homepage="https://github.com/noctalia-dev/noctalia-shell"
+
+distfiles="https://github.com/noctalia-dev/noctalia-shell/archive/${_commit}.tar.gz"
+checksum=abf39c3d04ae6dd8b9f928e0a1a3d876b37008ef3b5d590389b3ccd42da8d00d
+
+hostmakedepends="meson ninja pkg-config git curl"
+
+makedepends="
+ wayland-devel
+ wayland-protocols
+ libglvnd-devel
+ libepoxy-devel
+ cairo-devel
+ pango-devel
+ fontconfig-devel
+ freetype-devel
+ harfbuzz-devel
+ libxkbcommon-devel
+ pipewire-devel
+ wireplumber-devel
+ libcurl-devel
+ pam-devel
+ libwebp-devel
+ basu-devel
+ sdbus-c++-devel
+ polkit-devel
+ librsvg-devel
+ jemalloc-devel
+ glib-devel
+ libqalculate-devel
+ libxml2-devel
+"
+
+post_install() {
+    vlicense LICENSE
+    vdoc README.md
+
+    if [ ! -x "${DESTDIR}/usr/bin/noctalia" ]; then
+        msg_error "Expected binary /usr/bin/noctalia not found.\n"
+    fi
+}

@@ -1,0 +1,33 @@
+pkgname=zed
+version=1.9.0
+revision=1
+archs="x86_64"
+checkdepends="noto-fonts-ttf"
+short_desc="High-performance, multiplayer code editor from the creators of Atom"
+maintainer="Clara Keller <https://github.com/clarajk>"
+create_wrksrc=yes
+license="GPL-3.0-or-later, Apache-2.0, AGPL-3.0-or-later"
+homepage="https://zed.dev"
+changelog="https://github.com/zed-industries/zed/releases"
+distfiles="https://github.com/zed-industries/zed/releases/download/v${version}/zed-linux-x86_64.tar.gz"
+checksum=39e553ce3a00feeb78eab63a5cb7237cb460f3c9596b1b19052ceb7b9e8ec4dd
+
+_abyss_source=github-release
+_abyss_repo=zed-industries/zed
+_abyss_strip=v
+
+do_install() {
+    vmkdir opt/zed
+    vcopy "${wrksrc}/zed.app/*" opt/zed
+
+    vmkdir usr/bin
+    ln -sf /opt/zed/bin/zed "${DESTDIR}/usr/bin/zed"
+
+    vmkdir usr/share/applications
+    vinstall "${wrksrc}/zed.app/share/applications/dev.zed.Zed.desktop" 644 usr/share/applications zed.desktop
+
+    vmkdir usr/share/icons
+    vcopy "${wrksrc}/zed.app/share/icons/*" usr/share/icons/
+
+    vlicense "${wrksrc}/zed.app/licenses.md"
+}

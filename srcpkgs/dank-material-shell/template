@@ -1,0 +1,30 @@
+# Template file for 'dankmaterialshell'
+pkgname=dank-material-shell
+version=1.4.6
+revision=1
+wrksrc="DankMaterialShell-${version}"
+
+_abyss_source=github-release
+_abyss_repo=AvengeMedia/DankMaterialShell
+_abyss_strip=v
+
+build_style=go
+build_wrksrc="core"
+go_import_path="github.com/AvengeMedia/DankMaterialShell/core"
+go_package="${go_import_path}/cmd/dms"
+
+depends="quickshell-git dgop matugen qt6-declarative qt6-wayland pam accountsservice"
+
+short_desc="A Material You inspired shell for Wayland"
+maintainer="Clara Keller <https://github.com/clarajk>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/AvengeMedia/DankMaterialShell"
+
+distfiles="https://github.com/AvengeMedia/DankMaterialShell/archive/refs/tags/v${version}.tar.gz"
+checksum=f54601e522c883fa9cce02bec070e4321e47389a1cf453e7ad0bb7379ad91b61
+
+post_install() {
+    cd ..
+    vmkdir usr/share/quickshell/dms
+    cp -a quickshell/* ${DESTDIR}/usr/share/quickshell/dms/
+}

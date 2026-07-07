@@ -1,0 +1,39 @@
+# Template file for 'helium-browser-bin'
+pkgname=helium-browser-bin
+version=0.14.3.1
+revision=1
+archs="x86_64"
+depends="gtk+3 nss alsa-lib xdg-utils libXScrnSaver cups libgcrypt
+ liberation-fonts-ttf dbus libpulseaudio pciutils libva libffi
+ desktop-file-utils hicolor-icon-theme ca-certificates vulkan-loader"
+short_desc="Private, fast, and honest web browser based on Chromium"
+maintainer="noeltz <https://github.com/noeltz>"
+license="GPL-3.0-only, BSD-3-Clause"
+homepage="https://github.com/imputnet/helium-linux"
+nostrip=yes
+
+distfiles="https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64_linux.tar.xz"
+checksum="98404a938f96f4c8b2bbb92bed0422fd60c7e1591ec6bd69c4dc5e8b67212793"
+
+_n0_source=github-release
+_n0_repo=impunet/helium-linux
+_n0_strip=v
+
+do_install() {
+    vmkdir opt/helium
+    cp -a * ${DESTDIR}/opt/helium/
+
+    rm -f ${DESTDIR}/opt/helium/helium-wrapper-appimage.sh
+
+    vsed -i 's/CHROME_VERSION_EXTRA="custom"/CHROME_VERSION_EXTRA="Void Linux"/' ${DESTDIR}/opt/helium/helium-wrapper
+
+    vmkdir usr/bin
+    ln -sf /opt/helium/helium-wrapper ${DESTDIR}/usr/bin/helium
+
+    vinstall helium.desktop 644 usr/share/applications
+    vinstall product_logo_256.png 644 usr/share/pixmaps helium.png
+    vinstall product_logo_256.png 644 usr/share/icons/hicolor/256x256/apps helium.png
+
+    echo "License: GPL-3.0-only, BSD-3-Clause" > LICENSE
+    vlicense LICENSE
+}

@@ -1,0 +1,31 @@
+# Template file for 'noctalia'
+pkgname=noctalia
+version=5.0.0beta7
+revision=1
+build_style=meson
+hostmakedepends="pkg-config"
+makedepends="basu-devel cairo-devel fontconfig-devel freetype-devel harfbuzz-devel
+	jemalloc-devel json-c++ libcurl-devel libepoxy-devel libglvnd-devel libmd4c-devel
+	libqalculate-devel librsvg-devel libsodium-devel libwebp-devel libxkbcommon-devel
+	libxml2-devel libsecret-devel libjxl-devel MesaLib-devel pam-devel pango-devel
+	libsndfile-devel pipewire-devel polkit-devel sdbus-c++-devel stb tomlplusplus-devel
+	libical-devel wayland-devel wayland-protocols wireplumber-devel"
+short_desc="Noctalia desktop shell"
+maintainer="noeltz <https://github.com/noeltz>"
+license="MIT"
+homepage="https://noctalia.dev"
+_n0_source=github-release
+_n0_repo=noctalia-dev/noctalia
+_n0_strip=v
+changelog="https://github.com/noctalia-dev/noctalia/releases"
+distfiles="https://github.com/noctalia-dev/noctalia/archive/v${version/beta/-beta.}.tar.gz"
+checksum=fb553e9a1ff8451fe9ceb34c6dbbdf14771e3576cc2e94fcee194d15ee46ccc2
+
+do_patch() {
+	local upver="${version/beta/-beta.}"
+	vsed -i "0,/version: '[^']*'/s//version: '${upver}'/" meson.build
+}
+
+post_install() {
+	vlicense LICENSE
+}

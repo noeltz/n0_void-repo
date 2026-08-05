@@ -1,5 +1,5 @@
 pkgname=zed
-version=1.13.2
+version=1.14.2
 revision=1
 archs="x86_64"
 checkdepends="noto-fonts-ttf"
@@ -10,7 +10,7 @@ license="GPL-3.0-or-later, Apache-2.0, AGPL-3.0-or-later"
 homepage="https://zed.dev"
 changelog="https://github.com/zed-industries/zed/releases"
 distfiles="https://github.com/zed-industries/zed/releases/download/v${version}/zed-linux-x86_64.tar.gz"
-checksum=44508886bed247c7544f64b66e06bd388ec3d406776b5457868bc14a67130724
+checksum=6c476103b49a87dc62c46b8cc4dca84c0458ed53537de664ebdbc99b47daee2d
 
 _n0_source=github-release
 _n0_repo=zed-industries/zed

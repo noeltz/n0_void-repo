@@ -1,5 +1,5 @@
 pkgname=openai-codex
-version=0.152.1
+version=0.153.0
 revision=1
 archs="x86_64"
 short_desc="OpenAI Codex CLI"
@@ -7,7 +7,7 @@ maintainer="noeltz <https://github.com/noeltz>"
 license="Apache-2.0"
 homepage="https://openai.com/codex/"
 distfiles="https://github.com/openai/codex/releases/download/rust-v${version}/codex-x86_64-unknown-linux-musl.tar.gz"
-checksum=a0ed1b40b1d597b340f09ae00ecebc46670b06cb52aac315b9dc84fed0289fd0
+checksum=35a82c153d83959de09c2cb84ac70ba69d05788aeeb08d4a95ca68e39f86680e
 
 _n0_source=github-release
 _n0_repo=openai/codex

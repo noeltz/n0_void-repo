@@ -1,0 +1,57 @@
+# Template file for 'umbriel'
+# Personal-use template, not intended for upstream void-packages submission:
+#   - Built as a git snapshot (upstream has no tagged release yet).
+#   - Tuned for znver1 (Zen 1) instead of the generic x86_64 baseline.
+#   - jemalloc forced on (glibc target) rather than left on "auto".
+pkgname=umbriel
+version=0.1.0.20260827
+revision=1
+_commit=096cee602d4cd6d95480adc778fe0d95c7218251
+_scenefx_commit=9717fe638219017d793390cd0bd57a5d74441bdf
+build_wrksrc="umbriel-${_commit}"
+build_style=meson
+# Void's meson build-style hardcodes --buildtype=plain and forbids also
+# passing --buildtype/-Dbuildtype, so upstream's recommended
+# "--buildtype=release" can't be layered on top of it here. -O3 + znver1
+# below stands in for that release tuning instead. jemalloc is enabled
+# explicitly since this is glibc-only anyway (personal machine).
+configure_args="-Djemalloc=enabled"
+hostmakedepends="pkg-config wayland-devel"
+makedepends="wlroots0.20-devel tomlplusplus-devel nlohmann_json cairo-devel
+ pango-devel jemalloc-devel"
+depends="xwayland-satellite virtual?font:sans-serif"
+short_desc="Wayland compositor built on wlroots and SceneFX"
+maintainer="noeltz <https://github.com/noeltz>"
+license="MIT"
+_n0_source=github-release
+_n0_repo=noctalia-dev/noctalia
+_n0_strip=v
+homepage="https://github.com/noctalia-dev/umbriel"
+changelog="https://github.com/noctalia-dev/umbriel/commits/main/"
+distfiles="https://codeload.github.com/noctalia-dev/umbriel/tar.gz/${_commit}>umbriel-${_commit}.tar.gz
+ https://codeload.github.com/noctalia-dev/scenefx/tar.gz/${_scenefx_commit}>scenefx-${_scenefx_commit}.tar.gz"
+checksum="3f90f362787a7eb863e7f69453d6b50cf835ae2066db443a69fb1db366e54d7a
+ f8f8b775cda5a00b414e068a26398effbc825af28e6a46230ac049ec0ae37bd0"
+
+# znver1 tuning for this machine. -O3 stands in for the release optimization
+# level that --buildtype=release would otherwise select (see note above).
+# CFLAGS="-march=znver1 -mtune=znver1 -O3"
+# CXXFLAGS="-march=znver1 -mtune=znver1 -O3"
+
+# Two top-level dirs land side by side inside $wrksrc (one per distfile).
+# Wire the pinned SceneFX checkout into the submodule path meson.build
+# expects; the umbriel tarball ships that path as an empty directory since
+# git-archive doesn't include submodule content.
+post_extract() {
+	rmdir "${build_wrksrc}/subprojects/scenefx"
+	ln -rsf "scenefx-${_scenefx_commit}" "${build_wrksrc}/subprojects/scenefx"
+}
+
+# Compositor unit tests expect a running Wayland/DRM-capable environment
+# (headless backend, XDG_RUNTIME_DIR, etc.) that isn't available inside the
+# xbps-src chroot; skip them for this personal build.
+make_check=no
+
+post_install() {
+	vlicense LICENSE
+}

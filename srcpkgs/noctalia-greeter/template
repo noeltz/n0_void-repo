@@ -22,6 +22,7 @@ hostmakedepends="meson ninja pkg-config git"
 
 makedepends="
  json-c++
+ stb
  tomlplusplus-devel
  wayland-devel
  wayland-protocols

@@ -1,7 +1,7 @@
 # Template file for 'noctalia'
 pkgname=noctalia
-version=5.0.1
-revision=2
+version=5.2.0
+revision=1
 build_style=meson
 build_helper=qemu
 hostmakedepends="pkg-config"
@@ -22,7 +22,7 @@ license="MIT"
 homepage="https://docs.noctalia.dev/noctalia/"
 changelog="https://github.com/noctalia-dev/noctalia/releases"
 distfiles="https://github.com/noctalia-dev/noctalia/archive/refs/tags/v${version}.tar.gz"
-checksum=ed8334f294e9f94f4744e315b674511fc51203a6a56c561af8803a6eb6884698
+checksum=b1080bcb19c9ee7836153464d99021f34d1e3564f4bf4a26331a2af21234ddf8
 
 if [ "$XBPS_CHECK_PKGS" ]; then
 	configure_args="-Dtests=enabled"

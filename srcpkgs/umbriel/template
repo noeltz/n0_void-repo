@@ -30,8 +30,8 @@ homepage="https://github.com/noctalia-dev/umbriel"
 changelog="https://github.com/noctalia-dev/umbriel/commits/main/"
 distfiles="https://codeload.github.com/noctalia-dev/umbriel/tar.gz/${_commit}>umbriel-${_commit}.tar.gz
  https://codeload.github.com/noctalia-dev/scenefx/tar.gz/${_scenefx_commit}>scenefx-${_scenefx_commit}.tar.gz"
-checksum="3f90f362787a7eb863e7f69453d6b50cf835ae2066db443a69fb1db366e54d7a
- f8f8b775cda5a00b414e068a26398effbc825af28e6a46230ac049ec0ae37bd0"
+checksum="f2ee82382dc6b83c53bbbc2623edb6e342e8a17c01ec566b63b8a37c22905ed4
+ d8913b05b3b0bec925849253fcf03dcb2bf58d01326104f330196cce8323b98e"
 
 # znver1 tuning for this machine. -O3 stands in for the release optimization
 # level that --buildtype=release would otherwise select (see note above).

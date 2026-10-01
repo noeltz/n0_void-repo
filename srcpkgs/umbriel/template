@@ -17,7 +17,7 @@ build_style=meson
 # explicitly since this is glibc-only anyway (personal machine).
 configure_args="-Djemalloc=enabled"
 hostmakedepends="pkg-config wayland-devel"
-makedepends="wlroots0.20-devel tomlplusplus-devel nlohmann_json cairo-devel
+makedepends="wlroots-devel tomlplusplus-devel json-c++ cairo-devel
  pango-devel jemalloc-devel"
 depends="xwayland-satellite virtual?font:sans-serif"
 short_desc="Wayland compositor built on wlroots and SceneFX"

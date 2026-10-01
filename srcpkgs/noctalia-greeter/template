@@ -21,6 +21,7 @@ checksum=c95e23394b7bc5a120febfb6c8b3a74d2d7cc5be01d68de91049e7a5df2fab86
 hostmakedepends="meson ninja pkg-config git"
 
 makedepends="
+ tomlplusplus-devel
  wayland-devel
  wayland-protocols
  wlroots-devel

@@ -1,26 +1,49 @@
-# Template file for 'noctalia-greeter'
-pkgname=noctalia-greeter
-version=1.5.0
+pkgname=noctalia-greeter-git
+version=20260705182943
 revision=1
-build_style=meson
-hostmakedepends="meson ninja pkg-config wayland-devel"
-makedepends="wayland-devel wayland-protocols libxkbcommon-devel
-freetype-devel fontconfig-devel cairo-devel pango-devel librsvg-devel
-glib-devel tomlplusplus-devel json-c++ wlroots-devel libinput-devel
-MesaLib-devel libwebp-devel libxml2-devel stb"
-depends="greetd dbus polkit bash"
-short_desc="Minimal login greeter for greetd matching Noctalia Shell"
-maintainer="noeltz <https://github.com/noeltz>"
+_commit=48fc6d22b54efd62df83e3d1266feb89c291115a
+wrksrc="noctalia-greeter-${_commit}"
+
 _n0_source=git-head
 _n0_repo="https://github.com/noctalia-dev/noctalia-greeter.git"
-_n0_strip=v
+
+build_style=meson
+buildtype=release
+configure_args="-Db_ndebug=true"
+short_desc="A minimal login greeter for greetd that matches the look and feel of Noctalia Shell."
+maintainer="noeltz <https://github.com/noeltz>"
 license="MIT"
 homepage="https://github.com/noctalia-dev/noctalia-greeter"
-changelog="https://github.com/noctalia-dev/noctalia-greeter/releases"
-distfiles="https://github.com/noctalia-dev/noctalia-greeter/archive/refs/tags/v${version}.tar.gz"
-checksum="268bf4e4c5a5d915cd7d9f75d725959222474043b63c671092fe0fda0908d018"
+
+distfiles="https://github.com/noctalia-dev/noctalia-greeter/archive/${_commit}.tar.gz"
+checksum=385bb74231c1411fd61bab9324b3c9e83257ba1b7332a5aae4770ee857993158
+
+hostmakedepends="meson ninja pkg-config git"
+
+makedepends="
+ wayland-devel
+ wayland-protocols
+ wlroots-devel
+ libepoxy-devel
+ MesaLib-devel
+ libglvnd-devel
+ cairo-devel
+ pango-devel
+ fontconfig-devel
+ freetype-devel
+ harfbuzz-devel
+ libxkbcommon-devel
+ libwebp-devel
+ librsvg-devel
+"
+
+depends="greetd dbus"
 
 post_install() {
-	vlicense LICENSE
-	vdoc README.md
+    vlicense LICENSE
+    vdoc README.md
+
+    if [ ! -x "${DESTDIR}/usr/bin/noctalia-greeter" ]; then
+        msg_error "Expected binary /usr/bin/noctalia-greeter not found.\n"
+    fi
 }

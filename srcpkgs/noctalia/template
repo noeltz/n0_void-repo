@@ -1,31 +1,46 @@
 # Template file for 'noctalia'
 pkgname=noctalia
-version=5.0.0beta7
-revision=1
+version=5.0.1
+revision=2
 build_style=meson
+build_helper=qemu
 hostmakedepends="pkg-config"
-makedepends="basu-devel cairo-devel fontconfig-devel freetype-devel harfbuzz-devel
-	jemalloc-devel json-c++ libcurl-devel libepoxy-devel libglvnd-devel libmd4c-devel
-	libqalculate-devel librsvg-devel libsodium-devel libwebp-devel libxkbcommon-devel
-	libxml2-devel libsecret-devel libjxl-devel MesaLib-devel pam-devel pango-devel
-	libsndfile-devel pipewire-devel polkit-devel sdbus-c++-devel stb tomlplusplus-devel
-	libical-devel wayland-devel wayland-protocols wireplumber-devel"
-short_desc="Noctalia desktop shell"
+makedepends="MesaLib-devel basu-devel cairo-devel fontconfig-devel freetype-devel
+ harfbuzz-devel jemalloc-devel json-c++ libcurl-devel libepoxy-devel libglvnd-devel
+ libical-devel libjxl-devel libmd4c-devel libqalculate-devel librsvg-devel
+ libsecret-devel libsndfile-devel libsodium-devel libwebp-devel libxkbcommon-devel
+ libxml2-devel pam-devel pango-devel pipewire-devel polkit-devel sdbus-c++-devel stb
+ tomlplusplus-devel wayland-devel wayland-protocols wireplumber-devel"
+depends="git"
+checkdepends="git dejavu-fonts-ttf"
+short_desc="Desktop shell built on Wayland and OpenGL ES"
 maintainer="noeltz <https://github.com/noeltz>"
-license="MIT"
-homepage="https://noctalia.dev"
 _n0_source=github-release
 _n0_repo=noctalia-dev/noctalia
 _n0_strip=v
+license="MIT"
+homepage="https://docs.noctalia.dev/noctalia/"
 changelog="https://github.com/noctalia-dev/noctalia/releases"
-distfiles="https://github.com/noctalia-dev/noctalia/archive/v${version/beta/-beta.}.tar.gz"
-checksum=fb553e9a1ff8451fe9ceb34c6dbbdf14771e3576cc2e94fcee194d15ee46ccc2
+distfiles="https://github.com/noctalia-dev/noctalia/archive/refs/tags/v${version}.tar.gz"
+checksum=ed8334f294e9f94f4744e315b674511fc51203a6a56c561af8803a6eb6884698
 
-do_patch() {
-	local upver="${version/beta/-beta.}"
-	vsed -i "0,/version: '[^']*'/s//version: '${upver}'/" meson.build
-}
+if [ "$XBPS_CHECK_PKGS" ]; then
+	configure_args="-Dtests=enabled"
+else
+	configure_args="-Dtests=disabled"
+fi
+
+CXXFLAGS="-std=c++23"
 
 post_install() {
 	vlicense LICENSE
+	vsconf example.toml
+
+	vmkdir usr/share/doc/${pkgname}
+	vcopy "docs/user/*" usr/share/doc/${pkgname}
+
+	for shell in bash fish zsh; do
+		vtargetrun ${DESTDIR}/usr/bin/noctalia completions ${shell} > noctalia.${shell}
+		vcompletion noctalia.${shell} ${shell}
+	done
 }

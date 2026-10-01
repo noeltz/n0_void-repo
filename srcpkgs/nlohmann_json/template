@@ -12,7 +12,7 @@ configure_args="-DJSON_BuildTests=OFF -DJSON_MultipleHeaders=ON"
 short_desc="JSON for Modern C++ (header-only library)"
 maintainer="noeltz <https://github.com/noeltz>"
 _n0_source=github-release
-_n0_repo=noctalia-dev/noctalia
+_n0_repo=nlohmann/json
 _n0_strip=v
 license="MIT"
 homepage="https://github.com/nlohmann/json"

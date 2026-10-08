@@ -1,6 +1,6 @@
 # Template file for 'brave-origin'
 pkgname=brave-origin
-version=1.93.129
+version=1.97.56
 revision=1
 archs="x86_64"
 create_wrksrc=yes
@@ -15,7 +15,7 @@ _n0_strip=v
 license="MPL-2.0"
 homepage="https://brave.com"
 distfiles="https://github.com/brave/brave-browser/releases/download/v${version}/brave-origin-${version}-linux-amd64.zip"
-checksum=ad79b97d17838682f2495ae2d4ca25ec4708fb4fb1f112aa42715946156975c2
+checksum=4710187525d4153d47c1d0366a69829f351b445f568ed091bf62215de25ddf34
 nostrip=yes
 nopie=yes
 noshlibprovides=yes

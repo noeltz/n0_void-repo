@@ -1,0 +1,29 @@
+# Template file for 'xdg-desktop-portal-umbriel'
+pkgname=xdg-desktop-portal-umbriel
+version=20261008142455
+revision=1
+_commit=d6bd72cabd83e3084fb2f2e24898d8ffa4a8c24f
+wrksrc="${pkgname}-${_commit}"
+build_style=meson
+configure_args="-Dpicker=enabled"
+hostmakedepends="pkg-config glib-devel wayland-devel"
+makedepends="cairo-devel gtk4-devel json-c++ libdrm-devel libgbm-devel
+ pipewire-devel sdbus-c++-devel tomlplusplus-devel wayland-devel
+ wayland-protocols"
+depends="xdg-desktop-portal xdg-desktop-portal-gtk"
+short_desc="XDG desktop portal backend for the Umbriel compositor"
+maintainer="noeltz <https://github.com/noeltz>"
+license="MIT"
+homepage="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel"
+changelog="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel/commits/main/"
+distfiles="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel/archive/${_commit}.tar.gz"
+checksum=a7a19e75162577cf5ffeae37c14beb8d2020866cd84480d19d01b74aa53364ca
+
+# Upstream has no tagged releases; repoman tracks commits and refreshes checksums.
+_n0_source=git-head
+_n0_repo="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel.git"
+_n0_branch=main
+
+post_install() {
+	vlicense LICENSE
+}

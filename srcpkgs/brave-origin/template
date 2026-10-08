@@ -1,0 +1,70 @@
+# Template file for 'brave-origin'
+pkgname=brave-origin
+version=1.93.129
+revision=1
+archs="x86_64"
+create_wrksrc=yes
+hostmakedepends="unzip"
+depends="alsa-lib dbus-libs gtk+3 hicolor-icon-theme libcups libpulseaudio
+ libva libXScrnSaver libXtst nss liberation-fonts-ttf xdg-utils desktop-file-utils"
+short_desc="Brave Origin web browser"
+maintainer="noeltz <https://github.com/noeltz>"
+_n0_source=github-release
+_n0_repo=brave/brave-browser
+_n0_strip=v
+license="MPL-2.0"
+homepage="https://brave.com"
+distfiles="https://github.com/brave/brave-browser/releases/download/v${version}/brave-origin-${version}-linux-amd64.zip"
+checksum=ad79b97d17838682f2495ae2d4ca25ec4708fb4fb1f112aa42715946156975c2
+nostrip=yes
+nopie=yes
+noshlibprovides=yes
+
+_do_install_icon() {
+	local size="$1"
+
+	vinstall "product_logo_${size}.png" 644 \
+		"usr/share/icons/hicolor/${size}x${size}/apps" brave-origin.png
+}
+
+do_install() {
+	local appdir="usr/lib/brave-origin"
+
+	vmkdir ${appdir}
+	cp -a "${wrksrc}"/* "${DESTDIR}/${appdir}/"
+
+	rm -rf "${DESTDIR}/${appdir}/cron"
+	rm -rf "${DESTDIR}/${appdir}/apparmor.d"
+
+	chmod 755 "${DESTDIR}/${appdir}/brave"
+	chmod 755 "${DESTDIR}/${appdir}/brave-origin"
+	chmod 755 "${DESTDIR}/${appdir}/chrome-sandbox"
+	chmod 755 "${DESTDIR}/${appdir}/chrome_crashpad_handler"
+	chmod 755 "${DESTDIR}/${appdir}/chrome-management-service"
+
+	vmkdir usr/bin
+	ln -sfr "${DESTDIR}/${appdir}/brave-origin" \
+		"${DESTDIR}/usr/bin/brave-origin"
+
+	for size in 16 24 32 48 64 128 256; do
+		_do_install_icon "$size"
+	done
+
+	vmkdir usr/share/applications
+	cat > "${DESTDIR}/usr/share/applications/brave-origin.desktop" <<-EOF
+		[Desktop Entry]
+		Version=1.0
+		Name=Brave Origin
+		GenericName=Web Browser
+		Comment=Browse the web
+		Exec=brave-origin %U
+		Terminal=false
+		Icon=brave-origin
+		Type=Application
+		Categories=Network;WebBrowser;
+		MimeType=text/html;text/xml;application/xhtml+xml;x-scheme-handler/http;x-scheme-handler/https;
+		StartupWMClass=Brave-browser
+	EOF
+
+	vlicense LICENSE
+}

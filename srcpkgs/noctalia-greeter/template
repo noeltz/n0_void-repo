@@ -37,6 +37,7 @@ makedepends="
  harfbuzz-devel
  libxkbcommon-devel
  libwebp-devel
+ libjxl-devel
  librsvg-devel
 "
 

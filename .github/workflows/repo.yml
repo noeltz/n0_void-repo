@@ -40,10 +40,25 @@ jobs:
         shell: sh
         run: |
           set -e
-          REPO="https://repo-default.voidlinux.org/current"
-          xbps-install -Syu xbps
-          xbps-install -yu
-          xbps-install -y bash curl git grep openssl tar xz ca-certificates shadow sudo base-devel file github-cli zstd jq
+          retry() {
+            retry_attempt=1
+            retry_delay=5
+            until "$@"; do
+              retry_status=$?
+              if [ "$retry_attempt" -ge 5 ]; then
+                echo "Command failed after 5 attempts: $*" >&2
+                return "$retry_status"
+              fi
+              echo "Command failed (attempt $retry_attempt/5); retrying in ${retry_delay}s: $*" >&2
+              sleep "$retry_delay"
+              retry_attempt=$((retry_attempt + 1))
+              retry_delay=$((retry_delay * 2))
+            done
+          }
+
+          retry xbps-install -Syu xbps
+          retry xbps-install -yu
+          retry xbps-install -y bash curl git grep openssl tar xz ca-certificates shadow sudo base-devel file github-cli zstd jq
 
       - name: Install repoman
         run: |

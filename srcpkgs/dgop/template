@@ -3,18 +3,18 @@ pkgname=dgop
 version=2.0.0
 revision=1
 build_style=go
-go_import_path="github.com/AvengeMedia/dgop"
+go_import_path="github.com/duxlabs-dev/dux-gop"
 go_package="${go_import_path}/cmd/dgop"
 short_desc="Stateless, cursor-based system and process monitoring tool"
 maintainer="noeltz <https://github.com/noeltz>"
 license="MIT"
-homepage="https://github.com/AvengeMedia/dgop"
+homepage="https://github.com/duxlabs-dev/dux-gop"
 
 _n0_source=github-release
-_n0_repo=AvengeMedia/dgop
+_n0_repo=duxlabs-dev/dux-gop
 _n0_strip=v
 
-distfiles="https://github.com/AvengeMedia/dgop/archive/refs/tags/v${version}.tar.gz"
+distfiles="https://github.com/duxlabs-dev/dux-gop/archive/refs/tags/v${version}.tar.gz"
 checksum=e5d2cee5b34c9be5098423b4ee5b602c0cc1503adbfe227df1d732c5d614837e
 
 post_install() {

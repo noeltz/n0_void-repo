@@ -17,6 +17,7 @@ env:
   ARCH: "x86_64"
   BOOTSTRAP: "x86_64"
   TEST: "0"
+  XBPS_MIRROR: "https://repo-fastly.voidlinux.org/current"
 
 concurrency:
   group: ${{ github.workflow }}
@@ -55,6 +56,13 @@ jobs:
               retry_delay=$((retry_delay * 2))
             done
           }
+
+          # Override the image's repository files without changing package-owned files.
+          mkdir -p /etc/xbps.d
+          for conf in /usr/share/xbps.d/*-repository-*.conf; do
+            sed "s|https://repo-default.voidlinux.org/current|${XBPS_MIRROR}|g" \
+              "$conf" > "/etc/xbps.d/${conf##*/}"
+          done
 
           retry xbps-install -Syu xbps
           retry xbps-install -yu
@@ -97,6 +105,7 @@ jobs:
           echo "XBPS_CHROOT_CMD=ethereal" >> etc/conf
           echo "XBPS_ALLOW_CHROOT_BREAKOUT=yes" >> etc/conf
           echo "XBPS_MAKEJOBS=$(nproc)" >> etc/conf
+          echo "XBPS_MIRROR=${XBPS_MIRROR}" >> etc/conf
 
       - name: Copy srcpkgs to void-packages
         run: |
@@ -150,8 +159,30 @@ jobs:
         if: ${{ steps.plan.outputs.packages != '' }}
         working-directory: ./void-packages
         run: |
+          build_log=$(mktemp)
+          trap 'rm -f "$build_log"' EXIT
+
           for pkg in ${{ steps.plan.outputs.packages }}; do
-            ./xbps-src pkg "$pkg"
+            build_attempt=1
+            until ./xbps-src pkg "$pkg" 2>&1 | tee "$build_log"; do
+              build_status=${PIPESTATUS[0]}
+              # A logging failure must also stop the job.
+              if (( build_status == 0 )); then
+                exit 1
+              fi
+
+              # Retry failed dependency downloads only when XBPS reports a transport error.
+              if (( build_attempt >= 3 )) || ! grep -Eq \
+                'ERROR: \[trans\].*failed to download.*(Connection refused|Connection timed out|Operation timed out|Non-recoverable resolver failure|Temporary failure in name resolution|Operation not permitted)' \
+                "$build_log"; then
+                exit "$build_status"
+              fi
+
+              build_delay=$((build_attempt * 10))
+              echo "Repository download failed for $pkg; retrying in ${build_delay}s (attempt $build_attempt/3)."
+              sleep "$build_delay"
+              build_attempt=$((build_attempt + 1))
+            done
           done
 
       - name: Sign packages

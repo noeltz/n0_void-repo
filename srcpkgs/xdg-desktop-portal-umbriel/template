@@ -7,7 +7,7 @@ wrksrc="${pkgname}-${_commit}"
 build_style=meson
 configure_args="-Dpicker=enabled"
 hostmakedepends="pkg-config glib-devel wayland-devel"
-makedepends="cairo-devel gtk4-devel json-c++ libdrm-devel libgbm-devel
+makedepends="cairo-devel gtk4-devel json-c++ libdrm-devel libei-devel libgbm-devel
  pipewire-devel sdbus-c++-devel tomlplusplus-devel wayland-devel
  wayland-protocols"
 depends="xdg-desktop-portal xdg-desktop-portal-gtk"

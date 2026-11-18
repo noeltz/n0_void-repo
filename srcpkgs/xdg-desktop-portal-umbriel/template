@@ -5,12 +5,14 @@ revision=1
 _commit=ed91d04331b03257d5bd58a075b9cd6743d3efb2
 wrksrc="${pkgname}-${_commit}"
 build_style=meson
-configure_args="-Dpicker=enabled"
-hostmakedepends="pkg-config glib-devel wayland-devel"
-makedepends="cairo-devel gtk4-devel json-c++ libdrm-devel libei-devel libgbm-devel
- pipewire-devel sdbus-c++-devel tomlplusplus-devel wayland-devel
- wayland-protocols"
+configure_args="-Dpicker=true"
+hostmakedepends="pkg-config wayland-devel"
+makedepends="cairo-devel fontconfig-devel freetype-devel harfbuzz-devel json-c++
+ libdrm-devel libgbm-devel libglib-devel libglvnd-devel
+ libxkbcommon-devel pango-devel pipewire-devel sdbus-c++-devel stb
+ tomlplusplus-devel wayland-devel wayland-protocols"
 depends="xdg-desktop-portal xdg-desktop-portal-gtk"
+checkdepends="dbus"
 short_desc="XDG desktop portal backend for the Umbriel compositor"
 maintainer="noeltz <https://github.com/noeltz>"
 license="MIT"
@@ -23,6 +25,14 @@ checksum=e4ede7f3543b0387b223a7d9724dfb3e42bbc2ee8a4394ea65d88a3bb9435306
 _n0_source=git-head
 _n0_repo="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel.git"
 _n0_branch=main
+
+if [ "$XBPS_CHECK_PKGS" ]; then
+	# The PipeWire regression test relies on section GC for unused symbols.
+	configure_args+=" -Dtests=true -Db_lto=false"
+	makedepends+=" libei-devel"
+else
+	configure_args+=" -Dtests=false"
+fi
 
 post_install() {
 	vlicense LICENSE

@@ -1,8 +1,8 @@
 # Template file for 'xdg-desktop-portal-umbriel'
 pkgname=xdg-desktop-portal-umbriel
-version=20261126160033
+version=20261127011703
 revision=1
-_commit=04aa9870411e367f7dd87c00a23488f549624119
+_commit=da68a4376cd69595ac2fe439ec8c773e3bed0204
 wrksrc="${pkgname}-${_commit}"
 build_style=meson
 configure_args="-Dpicker=true"
@@ -19,7 +19,7 @@ license="MIT"
 homepage="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel"
 changelog="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel/commits/main/"
 distfiles="https://github.com/noctalia-dev/xdg-desktop-portal-umbriel/archive/${_commit}.tar.gz"
-checksum=cb5fec41482ae7d68e6e9f8f8f94b1371a143f5f6996b8d61bc3b5c68a10cb17
+checksum=818f4bcc808398485db7f7f827b2039c78003a68fa6b454beb4f3c29086748cb
 
 # Upstream has no tagged releases; repoman tracks commits and refreshes checksums.
 _n0_source=git-head
